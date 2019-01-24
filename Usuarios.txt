@@ -1,0 +1,3 @@
+Administrador Usuario= Bryan; Password= BART1234
+Gerente Usuario= Franco; Password=qscgy0147
+Cajera Usuario = Carla; Pasword = ygcsq1234

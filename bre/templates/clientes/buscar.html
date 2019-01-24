@@ -1,0 +1,103 @@
+{% extends "../index.html" %}
+
+{% block body %}
+
+<nav >
+    <div class="nav-wrapper z-depth-2 blue lighten-2" style="border-radius: 20px">
+    <a href="" class="brand-logo">Cuentas</a>
+    <ul class="right hide-on-med-and-down">
+        {%if presentar%}
+        <li><a class="button" href="crearCuenta?cedula={{ cedula }}">Nuevo C</a></li>
+        {%endif%}
+        <li><a class="buttonBack" href="/clientes/cuentas">Volver</a></li
+    </ul>
+ </div>
+
+</nav>
+<body>
+  <div class="">
+    <table >
+              <th ><input onchange="recibir()" id="txt_buscar" type="text" style="width: 200px; color: white; border: solid" placeholder="Ingrese numero de cuenta" value=""></th>
+              <th ><a id="boton_buscar" style="background-color: grey" class="btn btn-success"><i class="material-icons">search</i></a></th>
+
+            </table>
+  </div>
+
+
+          <div class="row">
+              <div class="col s12">
+                  <div class="card z-depth-3">
+                      <div class="card-content">
+                          <span class="card-title">{{mensaje}}</span>
+                          <table class="highlight responsive-table">
+                              <thead>
+                                  <tr>
+
+                                      <th>Numero de Cuenta</th>
+                                      <th>Cédula</th>
+                                      <th>Saldo</th>
+                                      <th>Tipo de Cuenta</th>
+                                      <th>Estado</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {% for item in clientes %}
+                                  <tr>
+
+                                      <td>{{item.numero}}</td>
+                                      <td>{{item.cliente}}</td>
+                                      <td>{{item.saldo}}</td>
+                                      <td>{{item.tipoCuenta}}</td>
+                                      {% if item.estado  %}
+                                        <td> <div class="switch">
+                                            <i class="material-icons left cyan-text text-accent-1 medium">toggle_on</i>
+                                        </div><td>
+                                        {% else %}
+                                        <td><div class="switch">
+                                          <i class="material-icons left red-text medium">toggle_off</i>
+                                        </div></td>
+                                        {% endif %}
+
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                      <div class="card-action">
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+</body>
+
+
+        <script>
+            function recibir() {
+                var valor = document.getElementById("txt_buscar").value;
+                document.getElementById("boton_buscar").href = 'transferencia?txt_buscar='+valor+'&numero={{ cliente }}';
+            }
+        </script>
+
+
+{% endblock %}
+{% block js %}
+<script>
+    var eliminar = function(id){
+        $.ajax({
+            url: "eliminar",
+            method: "POST",
+            data: { id : id }
+        }).success(function( msj ) {
+            if(msj == "eliminado"){
+
+            }
+            if(msj == "no eliminado"){
+
+            }
+            if(msj == "perdido"){
+
+            }
+        });
+    }
+</script>
+{% endblock %}

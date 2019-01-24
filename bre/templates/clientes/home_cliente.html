@@ -1,0 +1,93 @@
+{% extends "../index.html" %}
+
+{% block body %}
+
+<nav>
+  <div class="nav-wrapper z-depth-2 grey">
+      <a href="#!" class="brand-logo">Clientes</a>
+      <ul class="right hide-on-med-and-down">
+          <li><a href="nuevo"><i class="material-icons left">playlist_add</i>Nuevo</a></li>
+          <li><a href="listar"><i class="material-icons left">format_line_spacing</i>listar todos</a></li>
+      </ul>
+  </div>
+</nav>
+<div class="row">
+    <div class="col s12">
+        <div class="card z-depth-3">
+            <div class="card-content">
+                <span class="card-title">{{mensaje}}</span>
+                <table class="highlight responsive-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Cédula</th>
+                            <th>Apellidos</th>
+                            <th>Nombres</th>
+                            <th>Genero</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in clientes %}
+                        <tr>
+                            <td>
+                                <a href="editar?cedula={{item.cedula}}"><i class="material-icons left">edit</i></a>
+                                <a href="eliminar?cedula={{item.cedula}}"><i class="material-icons left">delete_sweep</i></a>
+
+                                {% if item.estado  %}
+                                <a href="crearCuenta?cedula={{ item.cedula }}">Crear Cuenta</a></li>
+                                {% else %}
+                                <a href="activar?cedula={{item.cedula}}"><i class="material-icons left">ballot</i></a>
+                                {% endif %}
+                            </td>
+                            <td>{{item.cedula}}</td>
+                            <td>{{item.apellidos}}</td>
+                            <td>{{item.nombres}}</td>
+                            {% if item.genero == 'm' %}
+                            <td>Masculino</td>
+                            {% else %}
+                            <td>Femenino</td>
+                            {% endif %}
+                            {% if item.estado  %}
+                            <td> <div class="switch">
+                                <i class="material-icons left cyan-text text-accent-1 medium">toggle_on</i>
+                            </div><td>
+                            {% else %}
+                            <td><div class="switch">
+                              <i class="material-icons left red-text medium">toggle_off</i>
+                            </div></td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-action">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block js %}
+<script>
+    var eliminar = function(id){
+        $.ajax({
+            url: "eliminar",
+            method: "POST",
+            data: { id : id }
+        }).success(function( msj ) {
+            if(msj == "eliminado"){
+
+            }
+            if(msj == "no eliminado"){
+
+            }
+            if(msj == "perdido"){
+
+            }
+        });
+    }
+</script>
+{% endblock %}
